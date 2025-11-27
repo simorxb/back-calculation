@@ -1,5 +1,7 @@
 # PID Anti-Windup: General Back-Calculation
 
+[![Open in MATLAB Online](https://www.mathworks.com/images/responsive/global/open-in-matlab-online.svg)](https://matlab.mathworks.com/open/github/v1?repo=simorxb/back-calculation)
+
 ## Summary
 This project demonstrates the *general back-calculation* anti-windup technique for PID controllers, addressing the limitations of the classic anti-windup implementation - especially when the controller includes additional poles, such as the filtered derivative. The repository provides MATLAB code, Simulink models, and slides ([PID Anti-Windup - General Back-Calculation.pdf](https://github.com/user-attachments/files/23789622/PID.Anti-Windup.-.General.Back-Calculation.pdf)) illustrating theory, implementation, and simulation results.
 
