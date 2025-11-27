@@ -4,7 +4,7 @@
 configs = {
     struct('name', 'PID - no anti-windup', 'ctrl_type', 0, 'color', '#0072BD');
     struct('name', 'PID - back-calculation - classic', 'ctrl_type', 1, 'color', '#EDB120');
-    struct('name', 'PID - back-calculation - adjusted', 'ctrl_type', 3, 'color', '#77AC30')
+    struct('name', 'PID - back-calculation - general', 'ctrl_type', 3, 'color', '#77AC30')
 };
 results = struct([]);
 

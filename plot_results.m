@@ -53,4 +53,3 @@ ax3.GridColor = 'w';
 ax3.GridAlpha = 0.3;
 ax3.XColor = 'w';
 ax3.YColor = 'w';
-
