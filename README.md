@@ -1,7 +1,7 @@
 # PID Anti-Windup: General Back-Calculation
 
 ## Summary
-This project demonstrates the *general back-calculation* anti-windup technique for PID controllers, addressing the limitations of the classic anti-windup implementation - especially when the controller includes additional poles, such as the filtered derivative. The repository provides MATLAB code, Simulink models, and slides illustrating theory, implementation, and simulation results.
+This project demonstrates the *general back-calculation* anti-windup technique for PID controllers, addressing the limitations of the classic anti-windup implementation - especially when the controller includes additional poles, such as the filtered derivative. The repository provides MATLAB code, Simulink models, and slides ([PID Anti-Windup - General Back-Calculation.pdf](https://github.com/user-attachments/files/23789622/PID.Anti-Windup.-.General.Back-Calculation.pdf)) illustrating theory, implementation, and simulation results.
 
 ## Project Overview
 Integral windup is a common issue in feedback control systems where actuators experience amplitude or slew-rate saturation. When the controller output saturates, the integrator continues accumulating error, often leading to overshoot, sluggish recovery, and degraded transient response.  
@@ -17,7 +17,7 @@ so that:
 
 $C(s) = C(\infty) + \bar{C}(s)$
 
-This method ensures correct anti-windup behavior for a general controller structure where the dynamic part is realizable. The complete block diagram is shown in the slides.
+This method ensures correct anti-windup behavior for a general controller structure where the dynamic part is realizable. The complete block diagram is shown in the slides at page 4 ([PID Anti-Windup - General Back-Calculation.pdf](https://github.com/user-attachments/files/23789622/PID.Anti-Windup.-.General.Back-Calculation.pdf))
 
 ---
 
@@ -33,7 +33,7 @@ the controller can be rewritten as:
 - **Dynamic part**
   $\bar{C}(s) = \frac{(k_i \tau + \frac{k_d}{\tau})s + k_i}{s^2 \tau + s}$
 
-The slides illustrate the correct general back-calculation block diagram used in this project :contentReference[oaicite:4]{index=4}.
+The slides (page 5)illustrate the correct general back-calculation block diagram used in this project [PID Anti-Windup - General Back-Calculation.pdf](https://github.com/user-attachments/files/23789622/PID.Anti-Windup.-.General.Back-Calculation.pdf).
 
 ---
 
@@ -47,7 +47,7 @@ where:
 - $m = 10 \text{ kg}$  
 - $k = 0.5 \, \text{N·s/m}$  
 
-This model is shown on page 6 of the slides :contentReference[oaicite:5]{index=5}.
+This model is shown on page 6 of the slides [PID Anti-Windup - General Back-Calculation.pdf](https://github.com/user-attachments/files/23789622/PID.Anti-Windup.-.General.Back-Calculation.pdf).
 
 The actuator force is saturated within:
 
@@ -59,7 +59,7 @@ A disturbance of **–8 N** is applied at **t = 60 s** during the simulation.
 ---
 
 ## Simulink Implementations
-Three controller variants are provided, fully modeled in Simulink (page 7 of the slides):
+Three controller variants are provided, fully modeled in Simulink (page 7 of the slides [PID Anti-Windup - General Back-Calculation.pdf](https://github.com/user-attachments/files/23789622/PID.Anti-Windup.-.General.Back-Calculation.pdf)):
 
 1. **PID — No Anti-Windup**  
 2. **PID — Classic Back-Calculation**  
@@ -75,13 +75,13 @@ A -8 N disturbance at 60 s is injected.
 The repository includes:
 
 ### **Initialisation Script**
-Defines plant parameters, PID gains, derivative filter constant, and anti-windup coefficients (page 8) :contentReference[oaicite:6]{index=6}.
+Defines plant parameters, PID gains, derivative filter constant, and anti-windup coefficients (page 8) [PID Anti-Windup - General Back-Calculation.pdf](https://github.com/user-attachments/files/23789622/PID.Anti-Windup.-.General.Back-Calculation.pdf)
 
 ### **Simulation Runner**
-Executes all controller configurations and logs output data (page 9) :contentReference[oaicite:7]{index=7}.
+Executes all controller configurations and logs output data (page 9) [PID Anti-Windup - General Back-Calculation.pdf](https://github.com/user-attachments/files/23789622/PID.Anti-Windup.-.General.Back-Calculation.pdf)
 
 ### **Plotting Scripts**
-Plots displacement, control input, and integrator behaviour for comparison (page 10) :contentReference[oaicite:8]{index=8}.
+Plots displacement, control input, and integrator behaviour for comparison (page 10) [PID Anti-Windup - General Back-Calculation.pdf](https://github.com/user-attachments/files/23789622/PID.Anti-Windup.-.General.Back-Calculation.pdf)
 
 ---
 
