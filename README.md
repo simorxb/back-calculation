@@ -19,7 +19,7 @@ so that:
 
 $C(s) = C(\infty) + \bar{C}(s)$
 
-This method ensures correct anti-windup behavior for a general controller structure where the dynamic part is realizable. The complete block diagram is shown in the slides at page 4 ([PID Anti-Windup - General Back-Calculation.pdf](https://github.com/user-attachments/files/23789622/PID.Anti-Windup.-.General.Back-Calculation.pdf))
+This method ensures correct anti-windup behavior for a general controller structure where the dynamic part is realizable. The complete block diagram is shown in the slides at page 4 ([PID Anti-Windup - General Back-Calculation - Discretisation.pdf](https://github.com/user-attachments/files/24534980/PID.Anti-Windup.-.General.Back-Calculation.-.Discretisation.pdf))
 
 ---
 
@@ -35,7 +35,28 @@ the controller can be rewritten as:
 - **Dynamic part**
   $\bar{C}(s) = \frac{(k_i \tau + \frac{k_d}{\tau})s + k_i}{s^2 \tau + s}$
 
-The slides (page 5)illustrate the correct general back-calculation block diagram used in this project [PID Anti-Windup - General Back-Calculation.pdf](https://github.com/user-attachments/files/23789622/PID.Anti-Windup.-.General.Back-Calculation.pdf).
+The slides (page 5)illustrate the correct general back-calculation block diagram used in this project [PID Anti-Windup - General Back-Calculation - Discretisation.pdf](https://github.com/user-attachments/files/24534980/PID.Anti-Windup.-.General.Back-Calculation.-.Discretisation.pdf).
+
+## General Back-Calculation for PID Controllers - Discretisation
+For convenience, we define:
+
+$K = k_i \tau + \frac{k_d}{\tau}$
+
+Now we have:
+
+$\bar{C}(s) = \frac{K s + k_i}{s (\tau s + 1)}$
+
+$\bar{C}(s) = \bar{C_1}(s) \bar{C_2}(s)$, with $\bar{C_1}(s) = \frac{K s + k_i}{\tau s + 1}$ and $\bar{C_2}(s) = \frac{1}{s}$
+
+Using Tustin transformation ($s \leftarrow \frac{2}{T} \frac{z-1}{z+1}$) we have:
+
+$C_1(z) = \frac{(\frac{2 K}{T} + k_i) z + (k_i-\frac{2 K}{T})}{(\frac{2 \tau}{T} + 1) z + (1-\frac{2 \tau}{T})}$
+
+while for $C_2(s)$ we use forward Euler to avoid algebraic loops:
+
+$C_2(z) = \frac{T}{z-1}$.
+
+And we are ready for the discretised general implementation for the PID (slide 7 in [PID Anti-Windup - General Back-Calculation - Discretisation.pdf](https://github.com/user-attachments/files/24534980/PID.Anti-Windup.-.General.Back-Calculation.-.Discretisation.pdf)).
 
 ---
 
