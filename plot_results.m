@@ -23,7 +23,11 @@ ax1.YColor = 'w';
 ax2 = subplot(3,1,2);
 hold on;
 for i = 1:length(configs)
-    plot(results(i).F.Time, results(i).F.Data, 'LineWidth', 2, 'DisplayName', configs{i}.name, "Color", configs{i}.color);
+    if configs{i}.ctrl_type == 4
+        stairs(results(i).F.Time, results(i).F.Data, 'LineWidth', 2, 'DisplayName', configs{i}.name, "Color", configs{i}.color);
+    else
+        plot(results(i).F.Time, results(i).F.Data, 'LineWidth', 2, 'DisplayName', configs{i}.name, "Color", configs{i}.color);
+    end
 end
 legend('TextColor', 'w', 'Color', 'k', 'EdgeColor', ...
     [0.5 0.5 0.5], 'LineWidth', 1, 'FontSize', 10, 'Location', 'best');
@@ -40,7 +44,11 @@ ax2.YColor = 'w';
 ax3 = subplot(3,1,3);
 hold on;
 for i = 1:length(configs)
-    plot(results(i).F_c.Time, results(i).F_c.Data, 'LineWidth', 2, 'DisplayName', configs{i}.name, "Color", configs{i}.color);
+    if configs{i}.ctrl_type == 4
+        stairs(results(i).F_c.Time, results(i).F_c.Data, 'LineWidth', 2, 'DisplayName', configs{i}.name, "Color", configs{i}.color);
+    else
+        plot(results(i).F_c.Time, results(i).F_c.Data, 'LineWidth', 2, 'DisplayName', configs{i}.name, "Color", configs{i}.color);
+    end
 end
 legend('TextColor', 'w', 'Color', 'k', 'EdgeColor', ...
     [0.5 0.5 0.5], 'LineWidth', 1, 'FontSize', 10, 'Location', 'best');
@@ -53,3 +61,6 @@ ax3.GridColor = 'w';
 ax3.GridAlpha = 0.3;
 ax3.XColor = 'w';
 ax3.YColor = 'w';
+
+% Link x axes
+linkaxes([ax1, ax2, ax3], 'x');
