@@ -70,7 +70,7 @@ where:
 - $m = 10 \text{ kg}$  
 - $k = 0.5 \, \text{N·s/m}$  
 
-This model is shown on page 6 of the slides [PID Anti-Windup - General Back-Calculation.pdf](https://github.com/user-attachments/files/23789622/PID.Anti-Windup.-.General.Back-Calculation.pdf).
+This model is shown on page 8 of the slides [PID Anti-Windup - General Back-Calculation - Discretisation.pdf](https://github.com/user-attachments/files/24534980/PID.Anti-Windup.-.General.Back-Calculation.-.Discretisation.pdf).
 
 The actuator force is saturated within:
 
@@ -82,11 +82,12 @@ A disturbance of **–8 N** is applied at **t = 60 s** during the simulation.
 ---
 
 ## Simulink Implementations
-Three controller variants are provided, fully modeled in Simulink (page 7 of the slides [PID Anti-Windup - General Back-Calculation.pdf](https://github.com/user-attachments/files/23789622/PID.Anti-Windup.-.General.Back-Calculation.pdf)):
+Four controller variants are provided, fully modeled in Simulink (page 9 of the slides [PID Anti-Windup - General Back-Calculation - Discretisation.pdf](https://github.com/user-attachments/files/24534980/PID.Anti-Windup.-.General.Back-Calculation.-.Discretisation.pdf)):
 
-1. **PID — No Anti-Windup**  
-2. **PID — Classic Back-Calculation**  
-3. **PID — General Back-Calculation**
+1. **PID - No Anti-Windup**  
+2. **PID - Classic Back-Calculation**  
+3. **PID - General Back-Calculation**
+4. **PID - General Back-Calculation - Discretised**
 
 These models allow direct comparison of transient performance, control effort, and robustness to saturation and disturbances.
 
@@ -98,22 +99,22 @@ A -8 N disturbance at 60 s is injected.
 The repository includes:
 
 ### **Initialisation Script**
-Defines plant parameters, PID gains, derivative filter constant, and anti-windup coefficients (page 8) [PID Anti-Windup - General Back-Calculation.pdf](https://github.com/user-attachments/files/23789622/PID.Anti-Windup.-.General.Back-Calculation.pdf)
+Defines plant parameters, PID gains, derivative filter constant, and anti-windup coefficients (page 10) [PID Anti-Windup - General Back-Calculation - Discretisation.pdf](https://github.com/user-attachments/files/24534980/PID.Anti-Windup.-.General.Back-Calculation.-.Discretisation.pdf)
 
 ### **Simulation Runner**
-Executes all controller configurations and logs output data (page 9) [PID Anti-Windup - General Back-Calculation.pdf](https://github.com/user-attachments/files/23789622/PID.Anti-Windup.-.General.Back-Calculation.pdf)
+Executes all controller configurations and logs output data (page 11) [PID Anti-Windup - General Back-Calculation - Discretisation.pdf](https://github.com/user-attachments/files/24534980/PID.Anti-Windup.-.General.Back-Calculation.-.Discretisation.pdf)
 
 ### **Plotting Scripts**
-Plots displacement, control input, and integrator behaviour for comparison (page 10) [PID Anti-Windup - General Back-Calculation.pdf](https://github.com/user-attachments/files/23789622/PID.Anti-Windup.-.General.Back-Calculation.pdf)
+Plots speed, control input, and integrator behaviour for comparison (page 12) [PID Anti-Windup - General Back-Calculation - Discretisation.pdf](https://github.com/user-attachments/files/24534980/PID.Anti-Windup.-.General.Back-Calculation.-.Discretisation.pdf)
 
 ---
 
 ## Simulation Results
-The simulation results (page 11) show:
+The simulation results (page 13) show:
 
 - **PID without anti-windup** → severe windup, long recovery time  
 - **Classic back-calculation** → partial improvement
-- **General back-calculation** → best performance
+- **General back-calculation** → best performance (for both the continuous and discrete time implementation)
 
 ---
 
