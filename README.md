@@ -3,7 +3,7 @@
 [![Open in MATLAB Online](https://www.mathworks.com/images/responsive/global/open-in-matlab-online.svg)](https://matlab.mathworks.com/open/github/v1?repo=simorxb/back-calculation)
 
 ## Summary
-This project demonstrates the *general back-calculation* anti-windup technique for PID controllers, addressing the limitations of the classic anti-windup implementation - especially when the controller includes additional poles, such as the filtered derivative. The repository provides MATLAB code, Simulink models, and slides ([PID Anti-Windup - General Back-Calculation.pdf](https://github.com/user-attachments/files/23789622/PID.Anti-Windup.-.General.Back-Calculation.pdf)) illustrating theory, implementation, and simulation results.
+This project demonstrates the *general back-calculation* anti-windup technique for PID controllers, addressing the limitations of the classic anti-windup implementation - especially when the controller includes additional poles, such as the filtered derivative. The repository provides MATLAB code, Simulink models, and slides ([PID Anti-Windup - General Back-Calculation - Discretisation.pdf](https://github.com/user-attachments/files/24534980/PID.Anti-Windup.-.General.Back-Calculation.-.Discretisation.pdf)) illustrating theory, implementation, and simulation results.
 
 ## Project Overview
 Integral windup is a common issue in feedback control systems where actuators experience amplitude or slew-rate saturation. When the controller output saturates, the integrator continues accumulating error, often leading to overshoot, sluggish recovery, and degraded transient response.  
