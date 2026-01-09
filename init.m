@@ -12,3 +12,5 @@ tau = 0.1;
 kbc = 1/(kp+kd/tau);
 F_max = 15;
 F_min = -15;
+K = ki*tau + kd/tau;
+T = 0.1;
