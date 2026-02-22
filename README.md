@@ -3,23 +3,114 @@
 [![Open in MATLAB Online](https://www.mathworks.com/images/responsive/global/open-in-matlab-online.svg)](https://matlab.mathworks.com/open/github/v1?repo=simorxb/back-calculation)
 
 ## Summary
-This project demonstrates the *general back-calculation* anti-windup technique for PID controllers, addressing the limitations of the classic anti-windup implementation - especially when the controller includes additional poles, such as the filtered derivative. The repository provides MATLAB code, Simulink models, and slides ([PID Anti-Windup - General Back-Calculation - Discretisation.pdf](https://github.com/user-attachments/files/24534980/PID.Anti-Windup.-.General.Back-Calculation.-.Discretisation.pdf)) illustrating theory, implementation, and simulation results.
+
+This project presents a comprehensive comparison of **three PID anti-windup techniques** for saturated control systems:
+
+- Classic Back-Calculation  
+- General Back-Calculation  
+- Integral Clamping  
+
+The repository demonstrates why the classic back-calculation approach becomes mathematically inconsistent when the controller includes additional poles (such as the filtered derivative in a practical PID implementation).  
+
+To address this limitation, the **general back-calculation** method is derived and implemented correctly for a PID controller with filtered derivative, including its discrete-time realisation.  
+
+In addition, **integral clamping** is introduced as a simple and effective anti-windup strategy that prevents integrator windup by conditionally freezing the integral action during actuator saturation.
+
+The project includes:
+
+- Theoretical derivations  
+- Continuous-time and discrete-time implementations  
+- MATLAB scripts  
+- Simulink models  
+- Comparative simulation results under actuator saturation and disturbance conditions  
+
+This repository provides a practical and rigorous reference for implementing robust **PID anti-windup strategies** in real-world control applications.
 
 ## Project Overview
-Integral windup is a common issue in feedback control systems where actuators experience amplitude or slew-rate saturation. When the controller output saturates, the integrator continues accumulating error, often leading to overshoot, sluggish recovery, and degraded transient response.  
-The *classic back-calculation* technique partially mitigates this by feeding an additional term to the integrator proportional to the difference between the saturated and unsaturated control signals.
 
-However, the classic implementation becomes **incorrect** when the controller contains poles besides the integrator - such as in the widely used *PID with filtered derivative* (implemented as $\frac{s}{\tau s + 1}$).  
-To address this, the **general back-calculation** approach separates the controller transfer function into:
+Integral windup is a well-known issue in feedback control systems where actuators are subject to amplitude or slew-rate saturation. When the controller output saturates, the integrator continues accumulating error, often leading to:
 
-- **Direct feedthrough**: $C(\infty)$  
-- **Dynamic component**: $\bar{C}(s)$  
+- Large overshoot  
+- Slow recovery  
+- Undesirable transients  
+- Performance degradation after the actuator exits saturation  
+
+This project provides a rigorous and practical comparison of **three PID anti-windup strategies** implemented on the same plant and tuning:
+
+1. **Classic Back-Calculation**
+2. **General Back-Calculation**
+3. **Integral Clamping**
+
+---
+
+### Classic Back-Calculation
+
+The classic back-calculation technique feeds an additional signal to the integrator proportional to the difference between the saturated and unsaturated control signals:
+
+$u_{aw} = K_{bc}(u_{sat} - u)$
+
+While widely used, this approach becomes **structurally incorrect** when the controller contains additional poles besides the integrator — such as in the very common **PID with filtered derivative**:
+
+$C(s) = k_p + \frac{k_i}{s} + k_d \frac{s}{\tau s + 1}$
+
+This limitation motivates a more general formulation.
+
+---
+
+### General Back-Calculation
+
+The **general back-calculation** method resolves this issue by separating the controller into:
+
+- A **direct feedthrough term** $C(\infty)$  
+- A **dynamic component** $\bar{C}(s)$  
 
 so that:
 
 $C(s) = C(\infty) + \bar{C}(s)$
 
-This method ensures correct anti-windup behavior for a general controller structure where the dynamic part is realizable. The complete block diagram is shown in the slides at page 4 ([PID Anti-Windup - General Back-Calculation - Discretisation.pdf](https://github.com/user-attachments/files/24534980/PID.Anti-Windup.-.General.Back-Calculation.-.Discretisation.pdf))
+This decomposition ensures that anti-windup compensation is applied consistently to the realizable dynamic part of the controller.
+
+The method is derived for a PID with filtered derivative and implemented in both:
+
+- Continuous time  
+- Discrete time (Tustin for the filtered derivative, forward Euler for the integral)
+
+This guarantees mathematical correctness and practical implementability.
+
+---
+
+### Integral Clamping
+
+In addition to back-calculation approaches, the repository introduces **Integral Clamping**, a simple yet highly effective anti-windup strategy.
+
+The integrator is frozen when saturation and error would cause further windup:
+
+- $e > 0$ AND $(u - u_{sat}) > 0$
+- $e < 0$ AND $(u - u_{sat}) < 0$
+
+This conditional integration mechanism prevents unnecessary growth of the integral term and significantly improves recovery after saturation.
+
+Unlike back-calculation, clamping does not require additional tuning gains and is straightforward to implement in embedded and discrete-time control systems.
+
+---
+
+### Comparative Perspective
+
+All three techniques are evaluated under identical conditions using:
+
+- A mass–damper plant model  
+- Force saturation limits  
+- External disturbance injection  
+- MATLAB scripts  
+- Simulink models  
+
+The results clearly show:
+
+- Severe windup without anti-windup  
+- Partial improvement with classic back-calculation  
+- Excellent and comparable performance from general back-calculation and integral clamping  
+
+This repository therefore serves as a complete technical reference for understanding, deriving, discretising, and comparing **PID anti-windup strategies for saturated control systems**.
 
 ---
 
@@ -68,7 +159,7 @@ $m \frac{d^2 z(t)}{dt^2} = F - k \frac{dz(t)}{dt}$
 where:
 
 - $m = 10 \text{ kg}$  
-- $k = 0.5 \, \text{N·s/m}$  
+- $k = 0.5 \, \text{Ns/m}$  
 
 This model is shown on page 8 of the slides [PID Anti-Windup - General Back-Calculation - Discretisation.pdf](https://github.com/user-attachments/files/24534980/PID.Anti-Windup.-.General.Back-Calculation.-.Discretisation.pdf).
 
@@ -115,6 +206,86 @@ The simulation results (page 13) show:
 - **PID without anti-windup** → severe windup, long recovery time  
 - **Classic back-calculation** → partial improvement
 - **General back-calculation** → best performance (for both the continuous and discrete time implementation)
+
+---
+
+## Integral Clamping and Anti-Windup Comparison
+
+In addition to the classic and general back-calculation techniques, this project also implements and compares a third anti-windup strategy: **Integral Clamping**.
+
+### What is Integral Clamping?
+
+Integral clamping is a simple and effective anti-windup technique that **freezes the integrator state** when actuator saturation would cause further windup.
+
+The integration is stopped if one of the following conditions is satisfied:
+
+- $e > 0$ AND $(u - u_{sat}) > 0$  
+- $e < 0$ AND $(u - u_{sat}) < 0$
+
+where:
+
+- $e$ is the control error  
+- $u$ is the unsaturated controller output  
+- $u_{sat}$ is the saturated control signal  
+
+In other words, when the actuator is saturated and the error would push the integrator further in the *wrong direction*, the integral action is temporarily disabled.
+
+This prevents excessive accumulation of the integral term and significantly reduces recovery time once the actuator exits saturation.
+
+---
+
+### Discrete-Time Implementation
+
+The discrete-time PID controller uses:
+
+- **Tustin transformation** for the filtered derivative  
+- **Forward Euler** for the integral term (to avoid algebraic loops)
+
+This ensures consistency with the discretised general back-calculation implementation already presented in the repository.
+
+---
+
+### Simulation Setup
+
+The comparison includes four controller configurations:
+
+1. **PID – No Anti-Windup**
+2. **PID – Classic Back-Calculation**
+3. **PID – General Back-Calculation**
+4. **PID – Integral Clamping**
+
+The plant is a mass–damper system:
+
+$m \frac{d^2 z(t)}{dt^2} = F - k \frac{dz(t)}{dt}$
+
+with:
+
+- $m = 10 \, \text{kg}$
+- $k = 0.5 \, \text{Ns/m}$
+
+The actuator force is saturated between:
+
+- $F_{\min} = -15 \, \text{N}$
+- $F_{\max} = 15 \, \text{N}$
+
+A disturbance of **–8 N** is applied at **t = 120 s**.
+
+---
+
+### Results and Discussion
+
+The simulations show that:
+
+- **No anti-windup** leads to severe integrator windup and long recovery times.
+- **Classic back-calculation** improves the response but does not fully address structural issues when additional controller poles are present.
+- **General back-calculation** and **Integral Clamping** exhibit excellent and comparable performance in this case.
+
+While this result is specific to the considered plant and tuning, the analysis highlights two important conclusions:
+
+1. The **classic back-calculation implementation is mathematically inconsistent** when applied to controllers with additional poles (e.g., PID with filtered derivative).
+2. Both **general back-calculation** and **integral clamping** provide robust and practical anti-windup solutions for saturated PID control systems.
+
+This comparison offers a clear and practical perspective on PID anti-windup strategies in both continuous-time and discrete-time implementations using MATLAB and Simulink.
 
 ---
 
