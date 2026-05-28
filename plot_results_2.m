@@ -13,6 +13,7 @@ legend('TextColor', 'w', 'Color', 'k', 'EdgeColor', ...
 hold off;
 grid on;
 ylabel('Speed (m/s)');
+xlabel('Time (s)');
 ax1.Color = 'k';
 ax1.GridColor = 'w';
 ax1.GridAlpha = 0.3;
@@ -30,6 +31,7 @@ legend('TextColor', 'w', 'Color', 'k', 'EdgeColor', ...
 hold off;
 grid on;
 ylabel('Force (N)');
+xlabel('Time (s)');
 ax2.Color = 'k';
 ax2.GridColor = 'w';
 ax2.GridAlpha = 0.3;
